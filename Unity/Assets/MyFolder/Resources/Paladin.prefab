@@ -521,9 +521,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2344644962832658346}
+  - component: {fileID: 8570727307202017041}
   m_Layer: 0
   m_Name: Knight_sword
-  m_TagString: Untagged
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -544,6 +545,19 @@ Transform:
   m_Father: {fileID: 3526635094336345561}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!65 &8570727307202017041
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2342634471413726560}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 5.26}
+  m_Center: {x: 0, y: 0, z: 3.14}
 --- !u!1 &2343424536834837540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,6 +1183,7 @@ GameObject:
   - component: {fileID: 7651440484399953180}
   - component: {fileID: 4641870530881061479}
   - component: {fileID: 7475948869254489437}
+  - component: {fileID: 8479246969163680885}
   m_Layer: 0
   m_Name: Paladin
   m_TagString: Player
@@ -1290,8 +1305,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cdb4cf6ea836474b854903ed43bbb75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canAttack: 1
   handWeapon: {fileID: 5165345692517269503}
   backWeapon: {fileID: 2343655456801204774}
+  swordCollider: {fileID: 0}
 --- !u!114 &2357509592531723955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1393,6 +1410,19 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &8479246969163680885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3190589133025088660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d48b6b2cf6dcfb47aa1cfe12ce9e511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
 --- !u!1 &3260642058788458437
 GameObject:
   m_ObjectHideFlags: 0

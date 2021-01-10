@@ -8,7 +8,7 @@ public class W_WeaponController : MonoBehaviour
 {
     int attackIndex;
 
-    bool canAttack = true;
+    public bool canAttack = true;
     bool isStrafe = false;
     Animator animator;
     W_Controller w_Controller;
@@ -17,6 +17,9 @@ public class W_WeaponController : MonoBehaviour
 
     public GameObject handWeapon;
     public GameObject backWeapon;
+
+    public BoxCollider swordCollider;
+    float castTime=1f;
 
     void Start()
     {
@@ -28,21 +31,43 @@ public class W_WeaponController : MonoBehaviour
 
     void Update()
     {
-        if (photonView.IsMine == true)
-            Attack();
+        if (photonView.IsMine)
+        {
+            animator.SetBool("isStrafe", isStrafe);
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                isStrafe = !isStrafe;
+            }
+
+            if (!isStrafe)
+                swordCollider = null;
+
+            if (isStrafe)
+                Attack();
+
+            if (isStrafe == true)
+            {
+                w_Controller.movementType = W_Controller.MovementType.Strafe;
+                w_IKLook.CloseIKSlightly();
+            }
+
+            if (isStrafe == false)
+            {
+                w_Controller.movementType = W_Controller.MovementType.Directional;
+                w_IKLook.OpenIKSlightly();
+            }
+        }
     }
 
     private void Attack()
     {
-        animator.SetBool("isStrafe", isStrafe);
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            isStrafe = !isStrafe;
-        }
-
         if (Input.GetKeyDown(KeyCode.Mouse0) && isStrafe && canAttack)
         {
+            swordCollider = GameObject.FindGameObjectWithTag("Sword").GetComponent<BoxCollider>();
+            canAttack = false;
+            swordCollider.enabled = true;
+
             if (w_Controller.isStrafeMoving)
             {
                 attackIndex = Random.Range(3, 5);
@@ -53,23 +78,13 @@ public class W_WeaponController : MonoBehaviour
             {
                 attackIndex++;
                 if (attackIndex > 2) attackIndex = 0;
-                animator.SetInteger("attackIndex", attackIndex);
+                animator.SetInteger("attackIndex", 0);
                 animator.SetTrigger("attack");
             }
+            if(attackIndex==0)
+                castTime=1.08f;
 
-            Debug.Log(attackIndex);
-        }
-
-        if (isStrafe == true)
-        {
-            w_Controller.movementType = W_Controller.MovementType.Strafe;
-            w_IKLook.CloseIKSlightly();
-        }
-
-        if (isStrafe == false)
-        {
-            w_Controller.movementType = W_Controller.MovementType.Directional;
-            w_IKLook.OpenIKSlightly();
+                StartCoroutine(calmDown(castTime));
         }
     }
 
@@ -89,5 +104,16 @@ public class W_WeaponController : MonoBehaviour
             backWeapon.SetActive(true);
             handWeapon.SetActive(false);
         }
+    }
+
+
+
+
+
+    IEnumerator calmDown(float calmTime)
+    {
+        yield return new WaitForSeconds(calmTime);
+        canAttack = true;
+        swordCollider.enabled = false;
     }
 }

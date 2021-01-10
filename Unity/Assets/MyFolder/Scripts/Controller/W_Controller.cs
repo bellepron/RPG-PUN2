@@ -44,7 +44,7 @@ public class W_Controller : MonoBehaviour
 
     void LateUpdate()
     {
-        if (photonView.IsMine == true)
+        if (photonView.IsMine)
             Movement();
     }
 
